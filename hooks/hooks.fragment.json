@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": "__CURSOR_WARP_ROOT__/scripts/on-session-start.sh",
+        "timeout": 10
+      }
+    ],
+    "beforeSubmitPrompt": [
+      {
+        "command": "__CURSOR_WARP_ROOT__/scripts/on-prompt-submit.sh",
+        "timeout": 10
+      }
+    ],
+    "postToolUse": [
+      {
+        "command": "__CURSOR_WARP_ROOT__/scripts/on-post-tool-use.sh",
+        "timeout": 10
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "__CURSOR_WARP_ROOT__/scripts/on-before-shell.sh",
+        "timeout": 10
+      }
+    ],
+    "beforeMCPExecution": [
+      {
+        "command": "__CURSOR_WARP_ROOT__/scripts/on-before-mcp.sh",
+        "timeout": 10
+      }
+    ],
+    "stop": [
+      {
+        "command": "__CURSOR_WARP_ROOT__/scripts/on-stop.sh",
+        "timeout": 15
+      }
+    ]
+  }
+}
