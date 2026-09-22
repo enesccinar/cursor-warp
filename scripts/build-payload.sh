@@ -4,6 +4,10 @@
 # Usage:
 #   source "$(dirname "${BASH_SOURCE[0]}")/build-payload.sh"
 #   BODY=$(build_payload "$INPUT" "prompt_submit" --arg query "$QUERY")
+#
+# The "agent" field must be "agent" (Cursor CLI's command prefix). Warp's
+# resolve_agent() matches OSC payloads against CLIAgent::command_prefixes(),
+# and CursorCli is registered as ["agent"], not "cursor".
 
 PLUGIN_CURRENT_PROTOCOL_VERSION=1
 

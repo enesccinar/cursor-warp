@@ -11,7 +11,7 @@ Emits Warp’s structured `warp://cli-agent` OSC 777 events (with `"agent": "age
 - **Complete** when the agent turn stops
 - **Tool complete** after tools finish (unblocks “waiting” state in Warp)
 
-> **Warp client note:** Tab icon status badges require Warp to listen for Cursor CLI OSC events (`CLIAgent::CursorCli` in `create_handler`). Until that lands in Warp, you may only see Cursor branding / hover metadata. Track: [warpdotdev/warp Cursor rich status](https://github.com/warpdotdev/warp/issues) (see linked PR from this repo’s README once opened).
+> **Warp client note:** Tab icon status badges require Warp to listen for Cursor CLI OSC events (`CLIAgent::CursorCli` in `create_handler`). Until that lands in Warp, you may only see Cursor branding / hover metadata. Track: [warpdotdev/warp#16127](https://github.com/warpdotdev/warp/issues/16127).
 
 ## Install
 
