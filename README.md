@@ -4,12 +4,14 @@ Warp terminal notifications and session status for [Cursor CLI](https://cursor.c
 
 ## Features
 
-Emits Warp’s structured `warp://cli-agent` OSC 777 events so Warp can show:
+Emits Warp’s structured `warp://cli-agent` OSC 777 events (with `"agent": "agent"`, Warp’s Cursor CLI command prefix) so Warp can show:
 
 - **Working** when you submit a prompt
 - **Needs attention** (best-effort) when a shell or MCP tool is about to run under approval
 - **Complete** when the agent turn stops
 - **Tool complete** after tools finish (unblocks “waiting” state in Warp)
+
+> **Warp client note:** Tab icon status badges require Warp to listen for Cursor CLI OSC events (`CLIAgent::CursorCli` in `create_handler`). Until that lands in Warp, you may only see Cursor branding / hover metadata. Track: [warpdotdev/warp Cursor rich status](https://github.com/warpdotdev/warp/issues) (see linked PR from this repo’s README once opened).
 
 ## Install
 

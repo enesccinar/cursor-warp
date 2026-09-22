@@ -44,7 +44,7 @@ build_payload() {
 
     jq -nc \
         --argjson v "$protocol_version" \
-        --arg agent "cursor" \
+        --arg agent "agent" \
         --arg event "$event" \
         --arg session_id "$session_id" \
         --arg cwd "$cwd" \

@@ -43,7 +43,9 @@ source "$SCRIPT_DIR/should-use-structured.sh"
 # --- build_payload ---
 INPUT='{"conversation_id":"conv-1","cwd":"/Users/me/Projects/demo","prompt":"hello world"}'
 BODY=$(build_payload "$INPUT" "prompt_submit" --arg query "hello world")
-assert_eq "agent is cursor" "cursor" "$(echo "$BODY" | jq -r .agent)"
+# Warp resolves the OSC "agent" field via CLIAgent::command_prefixes().
+# CursorCli's prefix is "agent" (the cursor-agent binary), not "cursor".
+assert_eq "agent slug matches Warp CursorCli prefix" "agent" "$(echo "$BODY" | jq -r .agent)"
 assert_eq "event is prompt_submit" "prompt_submit" "$(echo "$BODY" | jq -r .event)"
 assert_eq "session_id from conversation_id" "conv-1" "$(echo "$BODY" | jq -r .session_id)"
 assert_eq "project basename" "demo" "$(echo "$BODY" | jq -r .project)"
