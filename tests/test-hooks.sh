@@ -39,6 +39,13 @@ assert_contains() {
 source "$SCRIPT_DIR/build-payload.sh"
 # shellcheck source=../scripts/should-use-structured.sh
 source "$SCRIPT_DIR/should-use-structured.sh"
+# shellcheck source=../scripts/tab-title.sh
+source "$SCRIPT_DIR/tab-title.sh"
+
+assert_eq "title format is symbol then name" "✓ judge" "$(format_tab_title "✓" "judge")"
+assert_eq "title truncates long names" "⠋ $(printf '%.45s' "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz")..." "$(format_tab_title "⠋" "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz")"
+assert_eq "title fallback" "· Cursor" "$(format_tab_title "·" "")"
+assert_eq "display title from cwd" "demo" "$(extract_display_title '{"cwd":"/Users/me/Projects/demo"}')"
 
 # --- build_payload ---
 INPUT='{"conversation_id":"conv-1","cwd":"/Users/me/Projects/demo","prompt":"hello world"}'

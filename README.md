@@ -4,7 +4,9 @@ Warp terminal notifications and session status for [Cursor CLI](https://cursor.c
 
 ## Features
 
-Emits Warp’s structured `warp://cli-agent` OSC 777 events (with `"agent": "agent"`, Warp’s Cursor CLI command prefix) so Warp can show:
+Sets the terminal tab title to **`symbol title`** (braille spinner while working, `⏸` when blocked, `✓` when done). Tab titles cannot show a GIF — only characters.
+
+Also emits Warp’s structured `warp://cli-agent` OSC 777 events (with `"agent": "agent"`, Warp’s Cursor CLI command prefix) so Warp can show:
 
 - **Working** when you submit a prompt
 - **Needs attention** (best-effort) when a shell or MCP tool is about to run under approval
@@ -30,6 +32,14 @@ CURSOR_WARP_SRC=. ./install.sh
 ```
 
 Then **restart** Cursor Agent / `agent` inside Warp.
+
+Turn off Cursor’s built-in status titles so they do not overwrite this format. In `~/.cursor/cli-config.json`:
+
+```json
+"display": { "showStatusIndicators": false }
+```
+
+Or run `/status-indicators` in the session to toggle them off.
 
 ### What the installer does
 

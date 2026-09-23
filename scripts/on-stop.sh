@@ -1,16 +1,11 @@
 #!/bin/bash
-# stop → stop (task complete)
+# stop → stop + ✓ tab title
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=should-use-structured.sh
 source "$SCRIPT_DIR/should-use-structured.sh"
-
-if ! should_use_structured; then
-    exit 0
-fi
-
-# shellcheck source=build-payload.sh
-source "$SCRIPT_DIR/build-payload.sh"
+# shellcheck source=tab-title.sh
+source "$SCRIPT_DIR/tab-title.sh"
 
 INPUT=$(cat)
 
@@ -19,11 +14,22 @@ if [ "$STOP_HOOK_ACTIVE" = "true" ]; then
     exit 0
 fi
 
+SESSION_ID=$(extract_session_id_from_input "$INPUT")
+DISPLAY_TITLE=$(extract_display_title "$INPUT")
+[ -z "$DISPLAY_TITLE" ] && DISPLAY_TITLE=$(read_display_title "$SESSION_ID")
+set_static_tab_title "$SESSION_ID" "$CURSOR_WARP_SYMBOL_DONE" "$DISPLAY_TITLE"
+
+if ! should_use_structured; then
+    exit 0
+fi
+
+# shellcheck source=build-payload.sh
+source "$SCRIPT_DIR/build-payload.sh"
+
 TRANSCRIPT_PATH=$(echo "$INPUT" | jq -r '.transcript_path // empty' 2>/dev/null)
 QUERY=""
 RESPONSE=""
 
-# Small delay so the current turn can flush (same approach as claude-code-warp).
 if [ -n "$TRANSCRIPT_PATH" ] && [ -f "$TRANSCRIPT_PATH" ]; then
     sleep 0.3
     QUERY=$(jq -rs '
@@ -56,9 +62,8 @@ if [ -n "$TRANSCRIPT_PATH" ] && [ -f "$TRANSCRIPT_PATH" ]; then
     fi
 fi
 
-# Fall back to prompt fields on the stop payload when present
 if [ -z "$QUERY" ]; then
-    QUERY=$(echo "$INPUT" | jq -r '.prompt // .status // empty' 2>/dev/null)
+    QUERY=$(format_tab_title "$CURSOR_WARP_SYMBOL_DONE" "$DISPLAY_TITLE")
 fi
 
 BODY=$(build_payload "$INPUT" "stop" \
